@@ -9,7 +9,7 @@ class UserForm extends Component {
         this.state = {
             inputText: null,
             hasLoaded: false,
-            header: <h1>Loading...</h1>
+            headerText: 'Loading...'
         }
     }
 
@@ -17,40 +17,36 @@ class UserForm extends Component {
         setTimeout(() => {
             this.setState({
                 hasLoaded: true,
-                header: <h1>Welcome!</h1>
+                headerText: 'Welcome!'
             });
-            console.log(this.state.hasLoaded);
-        }, 750);
-        console.log(this.state.hasLoaded);
-
+        }, 1500);
     }
 
     handleInputChange(event) {
-        this.setState({inputText: event.target.value});
+        this.setState({ inputText: event.target.value });
         console.log(this.state.inputText);
     }
 
     handleButtonToggle() {
-        console.log(this.state.hasLoaded);
         this.setState({
             hasLoaded: !this.state.hasLoaded,
-            header: <h1>{this.state.hasLoaded ? 'Welcome!' : 'Loading...'}</h1>
+            headerText: !this.state.hasLoaded ? 'Toggled Welcome!' : 'Toggled Loading...'
         });
-        console.log(this.state.hasLoaded);
     }
 
     render() {
         return (
             <React.Fragment>
-                {this.state.header}
+                <h1>{this.state.headerText}</h1>
                 <Form>
                     <Form.Group controlId="formEmailInput">
                         <Form.Label>Please input your email address below:</Form.Label>
-                        <Form.Control type="email" placeholder="Enter your email here!" onChange={(e) => this.handleInputChange(e)}/>
+                        <Form.Control type="email" placeholder="Enter your email here!" onChange={(e) => this.handleInputChange(e)} />
                         <Form.Text className="text-muted">I promise it's not going to be used for nefarious purposes</Form.Text>
                     </Form.Group>
                     <Button variant="danger" onClick={() => this.handleButtonToggle()}>Allow us to harvest info / toggle header state</Button>
                 </Form>
+                <h4 style={{marginTop: 30 + 'px'}}>You've typed: {this.state.inputText}</h4>
             </React.Fragment>
         );
     }
