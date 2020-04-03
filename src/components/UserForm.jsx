@@ -1,48 +1,56 @@
 import React, { Component } from 'react';
-import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Columns } from "react-bulma-components/dist";
-import { Field, Control, Label, Input, Textarea, Select, Checkbox, Radio, Help, InputFile } from 'react-bulma-components/lib/components/form';
-import Icon from 'react-bulma-components/lib/components/icon';
-import 'react-bulma-components/lib/_variables.sass';
-import 'react-bulma-components/lib/components/form/form.sass'
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 class UserForm extends Component {
-    // constructor(props) {
-    //     super(props);
+    constructor(props) {
+        super(props);
 
-    //     this.state = {
-    //         buttonOneText: this.props.buttonOne,
-    //         buttonTwoText: this.props.buttonTwo,
-    //         buttonThreeText: this.props.buttonThree,
-    //         buttonFourText: 'Text from state, not props'
-    //     }
-    // }
+        this.state = {
+            inputText: null,
+            hasLoaded: false,
+            header: <h1>Loading...</h1>
+        }
+    }
 
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({
+                hasLoaded: true,
+                header: <h1>Welcome!</h1>
+            });
+            console.log(this.state.hasLoaded);
+        }, 750);
+        console.log(this.state.hasLoaded);
+
+    }
+
+    handleInputChange(event) {
+        this.setState({inputText: event.target.value});
+        console.log(this.state.inputText);
+    }
+
+    handleButtonToggle() {
+        console.log(this.state.hasLoaded);
+        this.setState({
+            hasLoaded: !this.state.hasLoaded,
+            header: <h1>{this.state.hasLoaded ? 'Welcome!' : 'Loading...'}</h1>
+        });
+        console.log(this.state.hasLoaded);
+    }
 
     render() {
         return (
             <React.Fragment>
-                <Columns className="is-centered is-multiline has-background-info">
-                    <Columns.Column>
-                        <Field>
-                            <Label>Name</Label>
-                            <Control>
-                            <Input placeholder="Text input" />
-                            </Control>
-                        </Field>
-                    </Columns.Column>
-                </Columns>
-                <Columns className="is-centered is-multiline has-background-info">
-                    <Columns.Column>
-                        <Field>
-                            <Label>Username</Label>
-                            <Control>
-                            <Input color="success" type="text" placeholder="Text input" value="bulma" />
-                            </Control>
-                            <Help color="success">This username is available</Help>
-                        </Field>
-                    </Columns.Column>
-                </Columns>
+                {this.state.header}
+                <Form>
+                    <Form.Group controlId="formEmailInput">
+                        <Form.Label>Please input your email address below:</Form.Label>
+                        <Form.Control type="email" placeholder="Enter your email here!" onChange={(e) => this.handleInputChange(e)}/>
+                        <Form.Text className="text-muted">I promise it's not going to be used for nefarious purposes</Form.Text>
+                    </Form.Group>
+                    <Button variant="danger" onClick={() => this.handleButtonToggle()}>Allow us to harvest info / toggle header state</Button>
+                </Form>
             </React.Fragment>
         );
     }

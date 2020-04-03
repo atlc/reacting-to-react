@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Button } from "react-bulma-components/dist";
-import { Columns } from "react-bulma-components/dist";
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
 class HelloButtons extends Component {
@@ -12,27 +12,31 @@ class HelloButtons extends Component {
             buttonOneText: this.props.buttonOne,
             buttonTwoText: this.props.buttonTwo,
             buttonThreeText: this.props.buttonThree,
-            buttonFourText: 'Text from state, not props'
+            buttonFourText: this.props.buttonFour
         }
+    }
+
+    componentDidMount() {
+        this.setState({buttonFourText: this.state.buttonFourText + ' {Text from state}'});
     }
 
 
     render() {
         return (
-            <Columns className="is-centered is-multiline has-background-dark">
-                <Columns.Column>
-                    <Button color="success" size="large">{this.state.buttonOneText}</Button>
-                </Columns.Column>
-                <Columns.Column>
-                    <Button color="primary" size="large">{this.state.buttonTwoText}</Button>
-                </Columns.Column>
-                <Columns.Column>
-                    <Button color="info" size="large">{this.state.buttonThreeText}</Button>
-                </Columns.Column>
-                <Columns.Column>
-                    <Button color="danger" size="large">{this.state.buttonFourText}</Button>
-                </Columns.Column>
-            </Columns>
+            <Row className="justify-content-md-center has-background-dark" style={{marginTop: 15 + 'px'}}>
+                <Col>
+                    <Button variant="outline-success" size="lg">{this.state.buttonOneText}</Button>
+                </Col>
+                <Col>
+                    <Button variant="outline-primary" size="lg">{this.state.buttonTwoText}</Button>
+                </Col>
+                <Col>
+                    <Button variant="outline-info" size="lg">{this.state.buttonThreeText}</Button>
+                </Col>
+                <Col>
+                    <Button variant="outline-danger" size="lg">{this.state.buttonFourText}</Button>
+                </Col>
+            </Row>
         );
     }
 }
